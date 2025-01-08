@@ -25,6 +25,7 @@ func main() {
 
 	// ---- Home Routes ---- //
 	e.GET("/", handlers.ServeHomePage)
+	e.GET("/:lang", handlers.ServeHomePage)
 
 	// ---- Global Routes ---- //
 	e.GET("/ping", handlers.ServePing)

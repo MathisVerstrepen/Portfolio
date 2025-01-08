@@ -9,5 +9,10 @@ import (
 )
 
 func ServeHomePage(c echo.Context) error {
-	return Render(c, http.StatusOK, comp.Root(comp.Home(), "Home"))
+	lang := c.Param("lang")
+	if lang == "" {
+		lang = "en"
+	}
+
+	return Render(c, http.StatusOK, comp.Root(comp.Home(lang), "Home"))
 }

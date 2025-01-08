@@ -1,0 +1,14 @@
+package components
+
+var text = map[string]map[string]string{
+    "en": {
+        "test": "EN",
+    },
+    "fr": {
+        "test": "FR",
+    },
+}
+
+templ t(lang, field string) {
+    { text[lang][field] }
+}
