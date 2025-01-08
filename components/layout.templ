@@ -50,6 +50,7 @@ templ layout(contents templ.Component, title string) {
     <body class="bg-beige relative font-serif">
         <div class="relative z-10 max-w-[1366px] mx-auto py-16">
             @contents
+            @footer()
         </div>
         @Svg()
     </body>
@@ -59,4 +60,20 @@ templ layout(contents templ.Component, title string) {
 
 templ Root(contents templ.Component, title string) {
     @layout(contents, title)
+}
+
+templ footer() {
+    <footer class="flex flex-col justify-center items-center mt-20">
+        <div class="flex space-x-4 w-full justify-center items-center mb-10">
+            <hr width="30%" class="border-1 border-grey"></hr>
+            <a href="mailto:contact@diikstra.fr" target="_blank">@UseIcon("mail", "rgb(60 61 55)", "large")</a>
+            <a href="https://www.linkedin.com/in/mathis-verstrepen/" target="_blank">@UseIcon("brand-linkedin", "rgb(60 61 55)", "large")</a>
+            <a href="https://github.com/MathisVerstrepen" target="_blank">@UseIcon("brand-github", "rgb(60 61 55)", "large")</a>
+            <hr width="30%" class="border-1 border-grey"></hr>
+        </div>
+        <p class="text-sm text-grey">Copyright © 2025 Mathis Verstrepen</p>
+        <div class="flex space-x-4 mt-5 items-center">
+            <a href="https://portfolio.diikstra.fr/contact" target="_blank" class="underline font-bold font-sans text-grey hover:text-black duration-200">Contact</a>
+        </div>
+    </footer>
 }
