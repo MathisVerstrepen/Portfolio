@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+    :root {
+        --c_beige: 236 223 204;
+        --c_dark_beige: 209 191 168;
+        --c_orange: 219 126 33;
+        --c_dark_orange: 190 109 28;
+        --c_red: 162 60 60;
+        --c_green: 105 117 101;
+        --c_dark_green: 78 86 75;
+        --c_grey: 60 61 55;
+        --c_black: 24 28 20;
+    }
+
+    @font-face {
+        font-family: "Archivo-Variable";
+        src: url("/assets/fonts/archivoComplete/Archivo-Variable.woff2")
+                format("woff2"),
+            url("/assets/fonts/archivoComplete/Archivo-Variable.woff")
+                format("woff"),
+            url("/assets/fonts/archivoComplete/Archivo-Variable.ttf")
+                format("truetype");
+        font-weight: 100 900;
+        font-display: swap;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: "ClashDisplay-Variable";
+        src: url("/assets/fonts/clashDisplay/ClashDisplay-Variable.woff2")
+                format("woff2"),
+            url("/assets/fonts/clashDisplay/ClashDisplay-Variable.woff")
+                format("woff"),
+            url("/assets/fonts/clashDisplay/ClashDisplay-Variable.ttf")
+                format("truetype");
+        font-weight: 200 700;
+        font-display: swap;
+        font-style: normal;
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "_meta": {
+        "deployService": "ApolloLaunch",
+        "deployServiceVersion": "1.0.0"
+    },
+    "config": {
+        "repository": {
+            "owner": "Mathis Verstrepen",
+            "name": "Portfolio"
+        },
+
+        "docker": {
+            "imageName": "portfolio-v2",
+            "imageTag": "latest",
+            "dockerfileLocation": "portfolio.Dockerfile",
+            "buildArgs": [],
+            "composeFile": "docker-compose.yml",
+            "envFile": "portfolio.env",
+            "envDeployType": "file",
+            "host": "hogwarts-3"
+        },
+
+        "deploy": {
+            "strategy": "all-at-once"
+        },
+
+        "environment": "dev"
+    }
+}
