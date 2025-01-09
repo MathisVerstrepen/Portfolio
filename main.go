@@ -13,6 +13,8 @@ import (
 
 func main() {
 	e := echo.New()
+	handlers.Init()
+
 	if os.Getenv("ENV") == "dev" {
 		e.Use(middleware.Logger())
 	}
@@ -21,11 +23,14 @@ func main() {
 	}))
 	e.Static("/assets", path.Join(os.Getenv("ROOT_DIR"), "assets"))
 
-	handlers.Init()
-
 	// ---- Home Routes ---- //
 	e.GET("/", handlers.ServeHomePage)
 	e.GET("/:lang", handlers.ServeHomePage)
+
+	// ---- Content Routes ---- //
+	e.GET("/:lang/tech&academics", handlers.ServeTechAndAcademicsPage)
+	e.GET("/:lang/experience", handlers.ServeExperiencePage)
+	e.GET("/:lang/projects", handlers.ServeProjectsPage)
 
 	// ---- Global Routes ---- //
 	e.GET("/ping", handlers.ServePing)

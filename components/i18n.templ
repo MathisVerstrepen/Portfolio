@@ -10,6 +10,36 @@ var text = map[string]map[string]string{
         "home.action_tech&academics": "Tech Stack & Academic career",
         "home.action_experience": "Professional Experience",
         "home.action_projects": "Personal Projects",
+
+        "tech&academics.title": "Tech Stack & Academic career",
+        "tech&academics.category1": "Academic career",
+        
+        "tech&academics.acad.1.name": "Université Laval 🡵",
+        "tech&academics.acad.1.place": "Québec, QC, Canada",
+        "tech&academics.acad.1.date": "Sep. 2024 -- Present",
+        "tech&academics.acad.1.degree": "Master's in Computer Science",
+        "tech&academics.acad.1.desc": "Exchange student, double degree in Computer Science.<br><strong>4.08/4.33</strong> Fall semester GPA",
+
+        "tech&academics.acad.2.name": "Polytech Lille 🡵",
+        "tech&academics.acad.2.place": "Villeneuve-d'Ascq, France",
+        "tech&academics.acad.2.date": "Sep. 2020 -- Present",
+        "tech&academics.acad.2.degree": "Computer Science and Statistics with 2 years of integrated preparatory classes",
+        "tech&academics.acad.2.desc": "<strong>16.43/20</strong> Last semester GPA",
+
+        "tech&academics.category2": "Language levels",
+        "tech&academics.lang.1.name": "French",
+        "tech&academics.lang.1.desc": "Native language - C2 CECRL level",
+        "tech&academics.lang.2.name": "English",
+        "tech&academics.lang.2.desc": "CECRL level: C1 <br> Highest TOEIC: 945 <br> Cambridge English B1 Preliminary obtained",
+        "tech&academics.lang.3.name": "German",
+        "tech&academics.lang.3.desc": "CECRL level: A1",
+
+        "tech&academics.category3": "Technologies",
+        "tech&academics.subcategory1": "Front-end",
+        "tech&academics.subcategory2": "Back-end/Full-stack",
+        "tech&academics.subcategory3": "Databases",
+        "tech&academics.subcategory4": "Tools",
+        "tech&academics.preferered": "Preferred",
     },
     "fr": {
         "home.title": "Salut 👋",
@@ -20,9 +50,39 @@ var text = map[string]map[string]string{
         "home.action_tech&academics": "Tech Stack & Parcours académique",
         "home.action_experience": "Expérience professionnelle",
         "home.action_projects": "Projets personnels",
+
+        "tech&academics.title": "Tech Stack & Parcours académique",
+        "tech&academics.category1": "Parcours académique",
+
+        "tech&academics.acad.1.name": "Université Laval",
+        "tech&academics.acad.1.place": "Québec, QC, Canada",
+        "tech&academics.acad.1.date": "Sep. 2024 -- Présent",
+        "tech&academics.acad.1.degree": "Maitrise en Informatique, Double diplôme",
+        "tech&academics.acad.1.desc": "Étudiant en échange, double diplôme en informatique. 4.08/4.33 GPA au semestre d'automne",
+
+        "tech&academics.acad.2.name": "Polytech Lille",
+        "tech&academics.acad.2.place": "Villeneuve-d'Ascq, France",
+        "tech&academics.acad.2.date": "Sep. 2020 -- Présent",
+        "tech&academics.acad.2.degree": "Informatique et Statistiques avec 2 ans de prépa intégrée",
+        "tech&academics.acad.2.desc": "16.43/20 Moyenne dernière session",
+
+        "tech&academics.category2": "Niveaux de langues",
+        "tech&academics.lang.1.name": "Français",
+        "tech&academics.lang.1.desc": "Langue maternelle - Niveau C2 CECRL",
+        "tech&academics.lang.2.name": "Anglais",
+        "tech&academics.lang.2.desc": "Niveau CECRL : C1 <br> TOEIC le plus élevé : 945 <br> Cambridge English B1 Preliminary obtenu",
+        "tech&academics.lang.3.name": "Allemand",
+        "tech&academics.lang.3.desc": "Niveau CECRL : A1",
+
+        "tech&academics.category3": "Technologies",
+        "tech&academics.subcategory1": "Front-end",
+        "tech&academics.subcategory2": "Back-end/Full-stack",
+        "tech&academics.subcategory3": "Bases de données",
+        "tech&academics.subcategory4": "Outils",
+        "tech&academics.preferered": "Préférées",
     },
 }
 
 templ t(lang, field string) {
-    { text[lang][field] }
+    @templ.Raw(text[lang][field])
 }

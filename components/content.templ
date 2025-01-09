@@ -1,0 +1,206 @@
+package components
+
+templ TechAndAcademics(lang string) {
+    <h1 class="text-4xl text-black font-bold font-sans mb-6 sm:mb-20">
+        @t(lang, "tech&academics.title")
+    </h1>
+
+    <h2 class="text-2xl text-grey font-bold font-sans my-6">
+        @t(lang, "tech&academics.category1")
+    </h2>
+
+    @academic(lang)
+
+    <h2 class="text-2xl text-grey font-bold font-sans my-6">
+        @t(lang, "tech&academics.category2")
+    </h2>
+
+    @language_level(lang)
+
+    <h2 class="text-2xl text-grey font-bold font-sans my-6">
+        @t(lang, "tech&academics.category3")
+    </h2>
+
+    @tech_stack(lang)
+}
+
+templ academic(lang string) {
+    <div class="flex flex-col space-y-4">
+        <blockquote class="text-black py-1 px-5 rounded-r-2xl relative flex items-center bg-green bg-opacity-25">
+            <hr class="bg-green absolute h-full w-2 top-0 left-0 rounded-r-2xl">
+            <div class="flex flex-col space-y-2 py-2 w-full">
+                <div class="flex flex-col sm:flex-row justify-between">
+                    <h3 class="text-xl text-black font-bold font-sans">
+                        <a href="https://www.ulaval.ca/etudes/programmes/maitrise-en-informatique" target="_blank" style="text-decoration: underline dotted">
+                            @t(lang, "tech&academics.acad.1.name")
+                        </a> 
+                        <p class="text-base text-grey font-serif"> @t(lang, "tech&academics.acad.1.place") </p>
+                    </h3>
+                    <p class="text-lg text-grey font-serif">
+                        @t(lang, "tech&academics.acad.1.date")
+                    </p>
+                </div>
+
+                <p class="text-lg text-grey font-serif">
+                    @t(lang, "tech&academics.acad.1.degree") <br>
+                    @t(lang, "tech&academics.acad.1.desc")
+                </p>
+            </div>
+        </blockquote>
+
+        <blockquote class="text-black py-1 px-5 rounded-r-2xl relative flex items-center bg-green bg-opacity-25">
+            <hr class="bg-green absolute h-full w-2 top-0 left-0 rounded-r-2xl">
+            <div class="flex flex-col space-y-2 py-2 w-full">
+                <div class="flex flex-col sm:flex-row justify-between">
+                    <h3 class="text-xl text-black font-bold font-sans">
+                        <a href="https://www.polytech-lille.fr/informatique-et-statistique/" target="_blank" style="text-decoration: underline dotted">
+                            @t(lang, "tech&academics.acad.2.name")
+                        </a> 
+                        <p class="text-base text-grey font-serif"> @t(lang, "tech&academics.acad.2.place") </p>
+                    </h3>
+                    <p class="text-lg text-grey font-serif">
+                        @t(lang, "tech&academics.acad.2.date")
+                    </p>
+                </div>
+
+                <p class="text-lg text-grey font-serif">
+                    @t(lang, "tech&academics.acad.2.degree") <br>
+                    @t(lang, "tech&academics.acad.2.desc")
+                </p>
+            </div>
+        </blockquote>
+    </div>
+}
+
+templ language_level(lang string) {
+    <div class="flex flex-col space-y-4">
+        <blockquote class="text-black py-1 px-5 rounded-r-2xl relative flex items-center bg-orange bg-opacity-25">
+            <hr class="bg-orange absolute h-full w-2 top-0 left-0 rounded-r-2xl">
+            <div class="flex flex-col space-y-2 py-2 w-full">
+                <div class="flex flex-col sm:flex-row justify-between">
+                    <h3 class="text-xl text-black font-bold font-sans flex items-center">
+                        <svg viewBox="0 0 40 30" width="1.34em" height="1em" class="mr-2">
+                            <use href="#flag-france"></use>
+                        </svg>
+                        @t(lang, "tech&academics.lang.1.name")
+                    </h3>
+                </div>
+
+                <p class="text-lg text-grey font-serif">
+                    @t(lang, "tech&academics.lang.1.desc")
+                </p>
+            </div>
+        </blockquote>
+
+        <blockquote class="text-black py-1 px-5 rounded-r-2xl relative flex items-center bg-orange bg-opacity-25">
+            <hr class="bg-orange absolute h-full w-2 top-0 left-0 rounded-r-2xl">
+            <div class="flex flex-col space-y-2 py-2 w-full">
+                <div class="flex flex-col sm:flex-row justify-between">
+                    <h3 class="text-xl text-black font-bold font-sans flex items-center">
+                        <svg viewBox="0 0 40 30" width="1.34em" height="1em" class="mr-2">
+                            <use href="#flag-united-kingdom"></use>
+                        </svg>
+                        @t(lang, "tech&academics.lang.2.name")
+                    </h3>
+                </div>
+
+                <p class="text-lg text-grey font-serif">
+                    @t(lang, "tech&academics.lang.2.desc")
+                </p>
+            </div>
+        </blockquote>
+
+        <blockquote class="text-black py-1 px-5 rounded-r-2xl relative flex items-center bg-orange bg-opacity-25">
+            <hr class="bg-orange absolute h-full w-2 top-0 left-0 rounded-r-2xl">
+            <div class="flex flex-col space-y-2 py-2 w-full">
+                <div class="flex flex-col sm:flex-row justify-between">
+                    <h3 class="text-xl text-black font-bold font-sans flex items-center">
+                        <svg viewBox="0 0 40 30" width="1.34em" height="1em" class="mr-2">
+                            <use href="#flag-germany"></use>
+                        </svg>
+                        @t(lang, "tech&academics.lang.3.name")
+                    </h3>
+                </div>
+
+                <p class="text-lg text-grey font-serif">
+                    @t(lang, "tech&academics.lang.3.desc")
+                </p>
+            </div>
+        </blockquote>
+    </div>
+}
+
+
+templ tech_stack(lang string) {
+    <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-2 py-2 w-full">
+            <h3 class="text-xl text-black font-bold font-sans">
+                @t(lang, "tech&academics.subcategory1")
+            </h3>
+
+            <p class="text-lg text-grey font-serif">
+                HTML, CSS, JavaScript, TypeScript, Node.js, Vue.js 3, Nuxt 3, Tailwind CSS, React, HTMX
+            </p>
+
+            <p class="text-lg text-grey font-serif">
+                <strong>
+                    @t(lang, "tech&academics.preferered"):
+                </strong>
+                HTMX, Tailwind CSS, Vue.js 3
+            </p>  
+        </div>
+
+        <div class="flex flex-col space-y-2 py-2 w-full">
+            <h3 class="text-xl text-black font-bold font-sans">
+                @t(lang, "tech&academics.subcategory2")
+            </h3>
+
+            <p class="text-lg text-grey font-serif">
+                Python, C, Golang, Java, R
+            </p>
+
+            <p class="text-lg text-grey font-serif">
+                <strong>
+                    @t(lang, "tech&academics.preferered"):
+                </strong>
+                Golang, Python
+            </p>
+        </div>
+
+        <div class="flex flex-col space-y-2 py-2 w-full">
+            <h3 class="text-xl text-black font-bold font-sans">
+                @t(lang, "tech&academics.subcategory3")
+            </h3>
+
+            <p class="text-lg text-grey font-serif">
+                PostgreSQL, SQLite, MongoDB, Redis, Cassandra
+            </p>
+
+            <p class="text-lg text-grey font-serif">
+                <strong>
+                    @t(lang, "tech&academics.preferered"):
+                </strong>
+                PostgreSQL, Redis
+            </p>
+        </div>
+
+        <div class="flex flex-col space-y-2 py-2 w-full">
+            <h3 class="text-xl text-black font-bold font-sans">
+                @t(lang, "tech&academics.subcategory4")
+            </h3>
+
+            <p class="text-lg text-grey font-serif">
+                Docker, Kubernetes, Git, Nginx, LaTeX, Figma, JupyterNotebook, VSCode, IntelliJ IDEA
+            </p>
+        </div>
+    </div>
+}   
+
+
+templ Experience(lang string) {
+    { lang }
+}
+
+templ Projects(lang string) {
+    { lang }
+}
