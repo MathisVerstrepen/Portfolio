@@ -1,7 +1,46 @@
 package components
 
+import (
+    "fmt"
+)
+
 templ Home(lang string) {
-	<div id="content" class="h-full w-full text-center">
-        @t(lang, "test")
+	<div id="content" class="h-full w-full">
+        <h1 class="text-[5rem] sm:text-[10rem] text-dark_green font-bold font-sans mb-20">
+            @t(lang, "home.title")
+        </h1>
+
+        <h2 class="text-4xl text-dark_green font-bold font-sans mb-16">
+            @t(lang, "home.subtitle")
+        </h2>
+
+        <p class="text-lg text-grey font-serif mb-10">
+            @t(lang, "home.text1")
+        </p>
+
+        <p class="text-lg text-grey font-serif mb-10">
+            @t(lang, "home.text2")
+        </p>
+
+        <p class="text-lg text-grey font-serif mb-10">
+            @t(lang, "home.text3")
+        </p>
+
+        <div class="flex flex-col sm:flex-row sm:space-x-6 items-center mb-10 sm:mb-48">
+            @actionButton(lang, "home.action_tech&academics", "lang", "school")
+            @actionButton(lang, "home.action_experience", "/experience", "briefcase")
+            @actionButton(lang, "home.action_projects", "/projects", "notes")
+        </div>
 	</div>
+}
+
+templ actionButton(lang, field, link, icon string) {
+    <a href={templ.SafeURL(fmt.Sprintf("%s/%s", lang, link))} 
+        class="w-full bg-beige text-green font-bold font-sans text-xl py-6 px-8 mt-4 border-2 border-green rounded shadow-md
+        hover:bg-dark_green hover:text-beige duration-200">
+        <div class="h-10 w-10 mb-2">
+            @UseIcon(icon, "currentColor", "auto")
+        </div>
+        @t(lang, field)
+    </a>
 }
