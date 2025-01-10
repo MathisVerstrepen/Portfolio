@@ -10,9 +10,13 @@ type Job struct {
 }
 
 templ Experience(lang string) {
-    <h1 class="text-4xl text-black font-bold font-sans mb-6 sm:mb-20">
+    <h1 class="text-4xl text-black font-bold font-sans mb-2">
         @t(lang, "experience.title")
     </h1>
+
+    <p class="mb-5 sm:mb-16">
+        @t(lang, "experience.description")
+    </p>
 
     <div class="flex flex-col space-y-6">
         @JobBloc(Job{
