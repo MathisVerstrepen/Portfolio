@@ -1,9 +1,13 @@
 package components
 
 templ TechAndAcademics(lang string) {
-    <h1 class="text-4xl text-black font-bold font-sans mb-6 sm:mb-20">
+    <h1 class="text-4xl text-black font-bold font-sans mb-2">
         @t(lang, "tech&academics.title")
     </h1>
+
+    <p class="mb-5 sm:mb-16">
+        @t(lang, "tech&academics.description")
+    </p>
 
     <h2 class="text-2xl text-grey font-bold font-sans my-6">
         @t(lang, "tech&academics.category1")
