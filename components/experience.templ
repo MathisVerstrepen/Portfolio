@@ -1,0 +1,81 @@
+package components
+
+type Job struct {
+    Place templ.Component
+    Date templ.Component
+    Title templ.Component
+    DescP1 templ.Component
+    DescP2 templ.Component
+    DescP3 templ.Component
+}
+
+templ Experience(lang string) {
+    <h1 class="text-4xl text-black font-bold font-sans mb-6 sm:mb-20">
+        @t(lang, "experience.title")
+    </h1>
+
+    <div class="flex flex-col space-y-6">
+        @JobBloc(Job{
+            Place: t(lang, "experience.job0.place"),
+            Date: t(lang, "experience.job0.date"),
+            Title: t(lang, "experience.job0.title"),
+            DescP1: t(lang, "experience.job0.desc.p1"),
+            DescP2: t(lang, "experience.job0.desc.p2"),
+            DescP3: t(lang, "experience.job0.desc.p3"),
+        })
+
+        @JobBloc(Job{
+            Place: t(lang, "experience.job1.place"),
+            Date: t(lang, "experience.job1.date"),
+            Title: t(lang, "experience.job1.title"),
+            DescP1: t(lang, "experience.job1.desc.p1"),
+            DescP2: t(lang, "experience.job1.desc.p2"),
+            DescP3: t(lang, "experience.job1.desc.p3"),
+        })
+
+        @JobBloc(Job{
+            Place: t(lang, "experience.job2.place"),
+            Date: t(lang, "experience.job2.date"),
+            Title: t(lang, "experience.job2.title"),
+            DescP1: t(lang, "experience.job2.desc.p1"),
+            DescP2: t(lang, "experience.job2.desc.p2"),
+            DescP3: t(lang, "experience.job2.desc.p3"),
+        })
+
+        @JobBloc(Job{
+            Place: t(lang, "experience.job3.place"),
+            Date: t(lang, "experience.job3.date"),
+            Title: t(lang, "experience.job3.title"),
+            DescP1: t(lang, "experience.job3.desc.p1"),
+            DescP2: t(lang, "experience.job3.desc.p2"),
+            DescP3: t(lang, "experience.job3.desc.p3"),
+        })
+    </div>
+}
+
+templ JobBloc(job Job) {
+    <blockquote class="text-black py-1 px-5 rounded-r-2xl relative flex items-center bg-green bg-opacity-25">
+        <hr class="bg-green absolute h-full w-2 top-0 left-0 rounded-r-2xl">
+        <div class="flex flex-col space-y-2 py-2 w-full">
+            <div class="flex flex-col sm:flex-row justify-between">
+                <h3 class="text-xl text-black font-bold font-sans">
+                    @job.Title
+                    <p class="text-base text-grey font-serif">@job.Place</p>
+                </h3>
+                <p class="text-lg text-grey font-serif">
+                    @job.Date
+                </p>
+            </div>
+
+            <p class="text-lg text-grey font-serif">
+                @job.DescP1
+            </p>
+            <ul class="list-disc text-lg text-grey font-serif pl-4">
+                @job.DescP2
+            </ul>
+            <p class="text-lg text-grey font-serif">
+                @job.DescP3
+            </p>
+        </div>
+    </blockquote>
+}
