@@ -1,5 +1,146 @@
 package components
 
+import (
+    "strings"
+)
+
+type Project struct {
+    Title templ.Component
+    Date templ.Component
+    Desc templ.Component
+    Tech templ.Component
+    Links []string
+    Images []string
+}
+
 templ Projects(lang string) {
-    { lang }
+    <div>
+        <h1 class="text-4xl text-black font-bold font-sans mb-2">
+            @t(lang, "projects.title")
+        </h1>
+
+        <p class="mb-5 sm:mb-16">
+            @t(lang, "projects.description")
+        </p>
+
+        @projetBloc(lang, Project{
+            Title: t(lang, "projects.project0.title"),
+            Date: t(lang, "projects.project0.date"),
+            Desc: t(lang, "projects.project0.desc"),
+            Tech: t(lang, "projects.project0.tech"),
+            Links: []string{"https://github.com/MathisVerstrepen/PotBlog", "https://potblog.dev/"},
+            Images: []string{"/assets/img/potblog_1.png"},
+        })
+
+        @projetBloc(lang, Project{
+            Title: t(lang, "projects.project1.title"),
+            Date: t(lang, "projects.project1.date"),
+            Desc: t(lang, "projects.project1.desc"),
+            Tech: t(lang, "projects.project1.tech"),
+            Links: []string{"https://github.com/MathisVerstrepen/letterboxd-statistics", "https://letterboxd.stats.diikstra.fr/"},
+            Images: []string{"/assets/img/letterboxd_stats_2.png", "/assets/img/letterboxd_stats_1.png"},
+        })
+
+        @projetBloc(lang, Project{
+            Title: t(lang, "projects.project2.title"),
+            Date: t(lang, "projects.project2.date"),
+            Desc: t(lang, "projects.project2.desc"),
+            Tech: t(lang, "projects.project2.tech"),
+            Links: []string{"https://github.com/MathisVerstrepen/letterboxd-jellyfin", "https://github.com/MathisVerstrepen/letterboxd-jellyfin-go"},
+        })
+
+        @projetBloc(lang, Project{
+            Title: t(lang, "projects.project3.title"),
+            Date: t(lang, "projects.project3.date"),
+            Desc: t(lang, "projects.project3.desc"),
+            Tech: t(lang, "projects.project3.tech"),
+            Links: []string{"https://github.com/MathisVerstrepen/ugc-alerts"},
+            Images: []string{"/assets/img/ugc_alerts_1.png"},
+        })
+
+        @projetBloc(lang, Project{
+            Title: t(lang, "projects.project4.title"),
+            Date: t(lang, "projects.project4.date"),
+            Desc: t(lang, "projects.project4.desc"),
+            Tech: t(lang, "projects.project4.tech"),
+            Links: []string{"https://github.com/MathisVerstrepen/meledio-backend", "https://github.com/MathisVerstrepen/meledio-frontend"},
+            Images: []string{"/assets/img/meledio_1.png"},
+        })
+
+        @projetBloc(lang, Project{
+            Title: t(lang, "projects.project5.title"),
+            Date: t(lang, "projects.project5.date"),
+            Desc: t(lang, "projects.project5.desc"),
+            Tech: t(lang, "projects.project5.tech"),
+            Links: []string{"https://github.com/MathisVerstrepen/GameInBox-Website"},
+            Images: []string{"/assets/img/gameinbox_1.png"},
+        })
+    </div>
+}
+
+templ projetBloc(lang string, project Project) {
+    <div class="mb-8 flex flex-col space-y-2">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center">
+            <div class="flex items-center space-x-4 mb-2 sm:mb-0">
+                @dateChip(project.Date)
+                <h2 class="text-2xl text-grey font-bold font-sans">
+                    @project.Title
+                </h2>     
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                for _, link := range project.Links {
+                    @linkChip(link)
+                }
+            </div>
+        </div>
+
+
+        <p>
+            @project.Desc
+        </p>
+        <p class="text-grey">
+            <span class="font-bold mr-1">
+                @t(lang, "tech&academics.category3") :
+            </span>
+            @project.Tech
+        </p>
+
+
+        <div class="flex items-center space-x-4 py-4 w-full overflow-y-scroll">
+            for _, image := range project.Images {
+                @projectImage(image)
+            }
+        </div>
+    </div>
+}
+
+templ dateChip(date templ.Component) {
+    <div class="bg-green bg-opacity-25 rounded-full py-1 px-4 text-grey font-serif w-fit">
+        @date
+    </div>
+}
+
+templ linkChip(link string) {
+    if strings.Contains(link, "github") {
+        @githubLink(link)
+    } else {
+        @standardLink(link)
+    }
+}
+
+templ githubLink(link string) {
+    <a href={templ.SafeURL(link)} target="about:blank" class="text-grey hover:text-black duration-200 flex items-center">
+        @UseIcon("brand-github", "currentColor", "medium") Github
+    </a>
+}
+
+templ standardLink(link string) {
+    <a href={templ.SafeURL(link)} target="about:blank" class="text-grey hover:text-black duration-200 flex items-center">
+        @UseIcon("world-www", "currentColor", "medium") Website
+    </a>
+}
+
+templ projectImage(image string) {
+    <img src={image} alt="project image" class="max-w-[min(100%,800px)] max-h-[400px] rounded-lg shadow-lg" loading="lazy">
 }
