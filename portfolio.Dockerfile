@@ -34,7 +34,7 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 
 WORKDIR /root
-ENV ROOT_DIR /root
+ENV ROOT_DIR=/root
 
 # Copy the pre-built binary file from the previous stage
 COPY --from=builder /app/main .
