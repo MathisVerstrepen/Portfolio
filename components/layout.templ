@@ -45,10 +45,13 @@ templ layout(contents templ.Component, title string) {
                 });
             </script>
         }
+
+        @urlResolver()
     </head>
 
     <body class="bg-beige relative font-serif px-8">
         <div class="relative z-10 sm:max-w-[1366px] mx-auto py-16 sm:mt-8">
+            @languageSwitcher()
             @contents
             @footer()
         </div>
@@ -76,4 +79,32 @@ templ footer() {
             <a href="https://portfolio.diikstra.fr/contact" target="_blank" class="underline font-bold font-sans text-grey hover:text-black duration-200">Contact</a>
         </div>
     </footer>
+}
+
+
+templ urlResolver() {
+    <script>
+        function urlResolver(lang) {
+            const url = window.location.href;
+            if (lang === "fr") {
+                return url.replace("/en", "/fr");
+            }
+
+            return url.replace("/fr", "/en");
+        }
+    </script>
+}
+
+templ languageSwitcher() {
+    <div class="absolute top-16 right-0 flex">
+        <div onclick="window.location.href = urlResolver('en')" role="button"
+            class="text-grey hover:text-black duration-200 mr-1">
+            EN
+        </div>
+        | 
+        <div onclick="window.location.href = urlResolver('fr')" role="button"
+            class="text-grey hover:text-black duration-200 ml-1">
+            FR
+        </div>
+    </div>
 }
