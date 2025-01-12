@@ -31,6 +31,7 @@ func main() {
 	e.GET("/:lang/tech&academics", handlers.ServeTechAndAcademicsPage)
 	e.GET("/:lang/experience", handlers.ServeExperiencePage)
 	e.GET("/:lang/projects", handlers.ServeProjectsPage)
+	e.GET("/contact", handlers.ServeContactPage)
 
 	// ---- Global Routes ---- //
 	e.GET("/ping", handlers.ServePing)

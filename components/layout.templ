@@ -51,11 +51,17 @@ templ layout(contents templ.Component, title string) {
 
     <body class="bg-beige relative font-serif px-8">
         <div class="relative z-10 sm:max-w-[1366px] mx-auto py-16 sm:mt-8">
-            @languageSwitcher()
-            @contents
-            @footer()
+            if (title != "Contact") {
+                @languageSwitcher()
+                @contents
+                @footer()                
+            } else {
+                @contents
+            }
         </div>
-        @Svg()
+        if (title != "Contact") {
+            @Svg()
+        }
     </body>
 
     </html>

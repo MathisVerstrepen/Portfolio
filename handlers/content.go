@@ -34,3 +34,7 @@ func ServeProjectsPage(c echo.Context) error {
 
 	return Render(c, http.StatusOK, comp.Root(comp.Projects(lang), "Projects"))
 }
+
+func ServeContactPage(c echo.Context) error {
+	return Render(c, http.StatusOK, comp.Root(comp.Contact(), "Contact"))
+}
