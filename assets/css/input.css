@@ -42,3 +42,24 @@
         font-style: normal;
     }
 }
+
+
+.custom_scrollbar {
+    --scrollbar-track: rgba(0, 0, 0, 0);
+    --scrollbar-thumb: rgba(209, 191, 168, 1);
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.custom_scrollbar::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.custom_scrollbar::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
+}
+
+.custom_scrollbar::-webkit-scrollbar {
+    width: 8px;
+}

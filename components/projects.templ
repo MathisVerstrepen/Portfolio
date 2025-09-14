@@ -24,6 +24,15 @@ templ Projects(lang string) {
         </p>
 
         @projetBloc(lang, Project{
+            Title: t(lang, "projects.project6.title"),
+            Date: t(lang, "projects.project6.date"),
+            Desc: t(lang, "projects.project6.desc"),
+            Tech: t(lang, "projects.project6.tech"),
+            Links: []string{"https://github.com/MathisVerstrepen/Meridian"},
+            Images: []string{"/assets/img/meridian_1.png", "/assets/img/meridian_2.png"},
+        })
+
+        @projetBloc(lang, Project{
             Title: t(lang, "projects.project0.title"),
             Date: t(lang, "projects.project0.date"),
             Desc: t(lang, "projects.project0.desc"),
@@ -37,7 +46,7 @@ templ Projects(lang string) {
             Date: t(lang, "projects.project1.date"),
             Desc: t(lang, "projects.project1.desc"),
             Tech: t(lang, "projects.project1.tech"),
-            Links: []string{"https://github.com/MathisVerstrepen/letterboxd-statistics", "https://letterboxd.stats.diikstra.fr/"},
+            Links: []string{"https://github.com/MathisVerstrepen/letterboxd-statistics"},
             Images: []string{"/assets/img/letterboxd_stats_2.png", "/assets/img/letterboxd_stats_1.png"},
         })
 
@@ -107,7 +116,7 @@ templ projetBloc(lang string, project Project) {
         </p>
 
 
-        <div class="flex items-center space-x-4 py-4 w-full overflow-y-scroll">
+        <div class="flex items-center space-x-4 py-4 w-full overflow-y-auto custom_scrollbar">
             for _, image := range project.Images {
                 @projectImage(image)
             }
