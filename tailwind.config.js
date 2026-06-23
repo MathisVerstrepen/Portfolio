@@ -4,7 +4,6 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                base: 'rgb(var(--c_base)/<alpha-value>)',
                 surface: 'rgb(var(--c_surface)/<alpha-value>)',
                 gold: 'rgb(var(--c_gold)/<alpha-value>)',
                 ink: 'rgb(var(--c_ink)/<alpha-value>)',

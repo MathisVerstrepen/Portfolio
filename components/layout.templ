@@ -72,9 +72,9 @@ templ layout(contents templ.Component, title string, lang string) {
                 @contents
             </div>
         } else {
-            <div class="mx-auto w-full max-w-[1080px] px-6 sm:px-10 lg:px-14">
+            <div class="mx-auto w-full max-w-[1080px] px-6 sm:px-10 lg:px-14 min-h-dvh flex flex-col">
                 @nav(lang, title)
-                <main class="pt-16 sm:pt-24 pb-10">
+                <main class={ "flex-1 flex flex-col", templ.KV("justify-center", title == "Home"), templ.KV("pt-14 sm:pt-20", title != "Home") }>
                     @contents
                 </main>
                 @footer()
@@ -121,8 +121,8 @@ templ navItem(lang, section, label string, active bool) {
 }
 
 templ footer() {
-    <footer class="mt-24 border-t border-line/10 pt-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-        <p class="text-sm text-smoke">© 2025 Mathis Verstrepen</p>
+    <footer class="mt-12 sm:mt-16 border-t border-line/10 pt-6 pb-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+        <p class="text-sm text-smoke">© 2026 Mathis Verstrepen</p>
         <div class="flex items-center gap-6">
             <a href="mailto:contact@diikstra.fr" class="text-sm text-smoke hover:text-ink transition-colors duration-200">Email</a>
             <a href="https://www.linkedin.com/in/mathis-verstrepen/" target="_blank" class="text-sm text-smoke hover:text-ink transition-colors duration-200">LinkedIn</a>
