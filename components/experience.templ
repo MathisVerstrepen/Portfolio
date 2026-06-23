@@ -10,76 +10,70 @@ type Job struct {
 }
 
 templ Experience(lang string) {
-    <h1 class="text-4xl text-black font-bold font-sans mb-2">
-        @t(lang, "experience.title")
-    </h1>
+    <div>
+        <p class="label mb-4">{ sectionLabel(lang, "career") }</p>
+        <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight text-ink">
+            @t(lang, "experience.title")
+        </h1>
+        <p class="mt-5 max-w-prose text-lg leading-relaxed text-smoke">
+            @t(lang, "experience.description")
+        </p>
 
-    <p class="mb-5 sm:mb-16">
-        @t(lang, "experience.description")
-    </p>
+        <div class="mt-14 border-t border-line/10">
+            @JobRow(Job{
+                Place: t(lang, "experience.job0.place"),
+                Date: t(lang, "experience.job0.date"),
+                Title: t(lang, "experience.job0.title"),
+                DescP1: t(lang, "experience.job0.desc.p1"),
+                DescP2: t(lang, "experience.job0.desc.p2"),
+                DescP3: t(lang, "experience.job0.desc.p3"),
+            })
 
-    <div class="flex flex-col space-y-6">
-        @JobBloc(Job{
-            Place: t(lang, "experience.job0.place"),
-            Date: t(lang, "experience.job0.date"),
-            Title: t(lang, "experience.job0.title"),
-            DescP1: t(lang, "experience.job0.desc.p1"),
-            DescP2: t(lang, "experience.job0.desc.p2"),
-            DescP3: t(lang, "experience.job0.desc.p3"),
-        })
+            @JobRow(Job{
+                Place: t(lang, "experience.job1.place"),
+                Date: t(lang, "experience.job1.date"),
+                Title: t(lang, "experience.job1.title"),
+                DescP1: t(lang, "experience.job1.desc.p1"),
+                DescP2: t(lang, "experience.job1.desc.p2"),
+                DescP3: t(lang, "experience.job1.desc.p3"),
+            })
 
-        @JobBloc(Job{
-            Place: t(lang, "experience.job1.place"),
-            Date: t(lang, "experience.job1.date"),
-            Title: t(lang, "experience.job1.title"),
-            DescP1: t(lang, "experience.job1.desc.p1"),
-            DescP2: t(lang, "experience.job1.desc.p2"),
-            DescP3: t(lang, "experience.job1.desc.p3"),
-        })
+            @JobRow(Job{
+                Place: t(lang, "experience.job2.place"),
+                Date: t(lang, "experience.job2.date"),
+                Title: t(lang, "experience.job2.title"),
+                DescP1: t(lang, "experience.job2.desc.p1"),
+                DescP2: t(lang, "experience.job2.desc.p2"),
+                DescP3: t(lang, "experience.job2.desc.p3"),
+            })
 
-        @JobBloc(Job{
-            Place: t(lang, "experience.job2.place"),
-            Date: t(lang, "experience.job2.date"),
-            Title: t(lang, "experience.job2.title"),
-            DescP1: t(lang, "experience.job2.desc.p1"),
-            DescP2: t(lang, "experience.job2.desc.p2"),
-            DescP3: t(lang, "experience.job2.desc.p3"),
-        })
-
-        @JobBloc(Job{
-            Place: t(lang, "experience.job3.place"),
-            Date: t(lang, "experience.job3.date"),
-            Title: t(lang, "experience.job3.title"),
-            DescP1: t(lang, "experience.job3.desc.p1"),
-            DescP2: t(lang, "experience.job3.desc.p2"),
-            DescP3: t(lang, "experience.job3.desc.p3"),
-        })
+            @JobRow(Job{
+                Place: t(lang, "experience.job3.place"),
+                Date: t(lang, "experience.job3.date"),
+                Title: t(lang, "experience.job3.title"),
+                DescP1: t(lang, "experience.job3.desc.p1"),
+                DescP2: t(lang, "experience.job3.desc.p2"),
+                DescP3: t(lang, "experience.job3.desc.p3"),
+            })
+        </div>
     </div>
 }
 
-templ JobBloc(job Job) {
-    <blockquote class="text-black py-1 px-5 rounded-r-2xl relative flex items-center bg-green bg-opacity-25">
-        <hr class="bg-green absolute h-full w-2 top-0 left-0 rounded-r-2xl">
-        <div class="flex flex-col space-y-2 py-2 w-full">
-            <div class="flex flex-col sm:flex-row justify-between">
-                <h3 class="text-xl text-black font-bold font-sans">
-                    @job.Title
-                    <p class="text-base text-grey font-serif">@job.Place</p>
-                </h3>
-                <p class="text-lg text-grey font-serif">
-                    @job.Date
-                </p>
+templ JobRow(job Job) {
+    <article class="py-9 border-b border-line/10">
+        <div class="grid grid-cols-1 sm:grid-cols-[1fr_2fr] gap-3 sm:gap-10">
+            <div class="sm:pt-1">
+                <p class="text-sm text-smoke">@job.Date</p>
+                <p class="mt-1 text-sm text-smoke/80">@job.Place</p>
             </div>
-
-            <p class="text-lg text-grey font-serif">
-                @job.DescP1
-            </p>
-            <ul class="list-disc text-lg text-grey font-serif pl-4">
-                @job.DescP2
-            </ul>
-            <p class="text-lg text-grey font-serif">
-                @job.DescP3
-            </p>
+            <div class="space-y-4">
+                <h3 class="text-xl font-semibold text-ink">@job.Title</h3>
+                <p class="max-w-prose text-base leading-relaxed text-smoke">@job.DescP1</p>
+                <ul class="max-w-prose list-disc marker:text-line/30 text-base leading-relaxed text-smoke pl-5">
+                    @job.DescP2
+                </ul>
+                <p class="max-w-prose text-base leading-relaxed text-smoke">@job.DescP3</p>
+            </div>
         </div>
-    </blockquote>
+    </article>
 }

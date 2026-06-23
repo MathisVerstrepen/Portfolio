@@ -4,20 +4,23 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                beige: 'rgb(var(--c_beige)/<alpha-value>)',
-                dark_beige: 'rgb(var(--c_dark_beige)/<alpha-value>)',
-                orange: 'rgb(var(--c_orange)/<alpha-value>)',
-                dark_orange: 'rgb(var(--c_dark_orange)/<alpha-value>)',
-                red: 'rgb(var(--c_red)/<alpha-value>)',
-                green: 'rgb(var(--c_green)/<alpha-value>)',
-                dark_green: 'rgb(var(--c_dark_green)/<alpha-value>)',
-                grey: 'rgb(var(--c_grey)/<alpha-value>)',
-                black: 'rgb(var(--c_black)/<alpha-value>)',
+                base: 'rgb(var(--c_base)/<alpha-value>)',
+                surface: 'rgb(var(--c_surface)/<alpha-value>)',
+                gold: 'rgb(var(--c_gold)/<alpha-value>)',
+                ink: 'rgb(var(--c_ink)/<alpha-value>)',
+                smoke: 'rgb(var(--c_smoke)/<alpha-value>)',
+                line: 'rgb(var(--c_line)/<alpha-value>)',
             },
-        },
-        fontFamily: {
-            sans: ["ClashDisplay-Variable", "sans-serif"],
-            serif: ["Archivo-Variable", "serif"],
+            fontFamily: {
+                sans: ["Manrope", "ui-sans-serif", "system-ui", "sans-serif"],
+                serif: ["'Playfair Display'", "ui-serif", "Georgia", "serif"],
+            },
+            letterSpacing: {
+                micro: "0.18em",
+            },
+            maxWidth: {
+                prose: "68ch",
+            },
         },
     },
     plugins: [],

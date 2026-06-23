@@ -15,5 +15,5 @@ func ServeHomePage(c echo.Context) error {
 		return c.Redirect(http.StatusMovedPermanently, "/en")
 	}
 
-	return Render(c, http.StatusOK, comp.Root(comp.Home(lang), "Home"))
+	return Render(c, http.StatusOK, comp.Root(comp.Home(lang), "Home", lang))
 }

@@ -14,7 +14,7 @@ func ServeTechAndAcademicsPage(c echo.Context) error {
 		lang = "en"
 	}
 
-	return Render(c, http.StatusOK, comp.Root(comp.TechAndAcademics(lang), "Tech & Academics"))
+	return Render(c, http.StatusOK, comp.Root(comp.TechAndAcademics(lang), "Tech & Academics", lang))
 }
 
 func ServeExperiencePage(c echo.Context) error {
@@ -23,7 +23,7 @@ func ServeExperiencePage(c echo.Context) error {
 		lang = "en"
 	}
 
-	return Render(c, http.StatusOK, comp.Root(comp.Experience(lang), "Experience"))
+	return Render(c, http.StatusOK, comp.Root(comp.Experience(lang), "Experience", lang))
 }
 
 func ServeProjectsPage(c echo.Context) error {
@@ -32,9 +32,9 @@ func ServeProjectsPage(c echo.Context) error {
 		lang = "en"
 	}
 
-	return Render(c, http.StatusOK, comp.Root(comp.Projects(lang), "Projects"))
+	return Render(c, http.StatusOK, comp.Root(comp.Projects(lang), "Projects", lang))
 }
 
 func ServeContactPage(c echo.Context) error {
-	return Render(c, http.StatusOK, comp.Root(comp.Contact(), "Contact"))
+	return Render(c, http.StatusOK, comp.Root(comp.Contact(), "Contact", "en"))
 }
