@@ -14,11 +14,11 @@ type Job struct {
 templ Experience(lang string) {
     <div>
         <p class="label mb-4">{ sectionLabel(lang, "career") }</p>
-        <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight text-ink">
+        <h1 class="text-3xl sm:text-5xl font-semibold tracking-tight text-ink">
             @t(lang, "experience.title")
         </h1>
 
-        <div class="mt-14 border-t border-line/10">
+        <div class="mt-10 sm:mt-14 border-t border-line/10">
             @JobRow(Job{
                 Place: t(lang, "experience.job0.place"),
                 Date: t(lang, "experience.job0.date"),
@@ -67,12 +67,12 @@ templ Experience(lang string) {
 }
 
 templ JobRow(job Job) {
-    <article class="py-9 border-b border-line/10">
+    <article class="py-7 sm:py-9 border-b border-line/10">
         <div class="grid grid-cols-1 sm:grid-cols-[1fr_2fr] gap-3 sm:gap-10">
             <div class="sm:pt-1">
                 <div class="mb-4 flex flex-wrap gap-2">
                     for index, logo := range job.Logos {
-                        <div class="flex h-16 w-36 items-center justify-center rounded-md border border-line/10 bg-white p-3">
+                        <div class="flex h-14 w-32 items-center justify-center rounded-md border border-line/10 bg-white p-3 sm:h-16 sm:w-36">
                             <img src={logo} alt={job.LogoAlts[index]} class="max-h-full max-w-full object-contain" loading="lazy"/>
                         </div>
                     }
@@ -81,12 +81,12 @@ templ JobRow(job Job) {
                 <p class="mt-1 text-sm text-smoke/80">@job.Place</p>
             </div>
             <div class="space-y-4">
-                <h3 class="text-xl font-semibold text-ink">@job.Title</h3>
-                <p class="max-w-prose text-base leading-relaxed text-smoke">@job.DescP1</p>
-                <ul class="max-w-prose list-disc marker:text-line/30 text-base leading-relaxed text-smoke pl-5">
+                <h3 class="text-lg sm:text-xl font-semibold text-ink">@job.Title</h3>
+                <p class="max-w-prose text-sm sm:text-base leading-relaxed text-smoke">@job.DescP1</p>
+                <ul class="max-w-prose list-disc marker:text-line/30 text-sm sm:text-base leading-relaxed text-smoke pl-5">
                     @job.DescP2
                 </ul>
-                <p class="max-w-prose text-base leading-relaxed text-smoke">@job.DescP3</p>
+                <p class="max-w-prose text-sm sm:text-base leading-relaxed text-smoke">@job.DescP3</p>
             </div>
         </div>
     </article>

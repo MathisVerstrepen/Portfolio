@@ -4,7 +4,7 @@ import "strings"
 
 templ Contact() {
 	<div class="w-full max-w-md">
-		<div class="flex items-center gap-5">
+		<div class="flex items-center gap-4 sm:gap-5">
 			<img
 				src="/assets/img/mathis.png"
 				alt="Mathis Verstrepen"
@@ -12,9 +12,9 @@ templ Contact() {
 				width="128"
 				height="128"
 			/>
-			<div>
+			<div class="min-w-0">
 				<h1 class="text-lg font-semibold text-ink">Mathis Verstrepen</h1>
-				<p class="text-sm text-smoke">AI software engineer <span class="text-gold">&amp;</span> full-stack developer</p>
+				<p class="text-sm text-smoke leading-relaxed">AI software engineer <span class="text-gold">&amp;</span> full-stack developer</p>
 			</div>
 		</div>
 
@@ -45,8 +45,8 @@ templ contactRow(href, icon, label, value string) {
 		<span class="h-5 w-5 inline-flex text-smoke group-hover:text-gold transition-colors duration-200">
 			@UseIcon(icon, "currentColor", "auto")
 		</span>
-		<span class="text-sm font-medium text-ink">{ label }</span>
-		<span class="ml-auto text-sm text-smoke group-hover:text-gold transition-colors duration-200">{ value }</span>
+		<span class="shrink-0 text-sm font-medium text-ink">{ label }</span>
+		<span class="ml-auto min-w-0 break-all text-right text-sm text-smoke group-hover:text-gold transition-colors duration-200">{ value }</span>
 	</a>
 }
 

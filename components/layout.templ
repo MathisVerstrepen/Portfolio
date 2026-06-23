@@ -206,9 +206,9 @@ templ layout(contents templ.Component, title string, lang string) {
                 @contents
             </div>
         } else {
-            <div class="mx-auto w-full max-w-[1080px] px-6 sm:px-10 lg:px-14 min-h-dvh flex flex-col">
+            <div class="mx-auto w-full max-w-[1080px] px-5 sm:px-10 lg:px-14 min-h-dvh flex flex-col">
                 @nav(lang, title)
-                <main class={ "flex-1 flex flex-col", templ.KV("justify-center", title == "Home"), templ.KV("pt-14 sm:pt-20", title != "Home") }>
+                <main class={ "flex-1 flex flex-col", templ.KV("justify-center", title == "Home"), templ.KV("pt-10 sm:pt-20", title != "Home") }>
                     @contents
                 </main>
                 @footer()
@@ -225,18 +225,18 @@ templ Root(contents templ.Component, title string, lang string) {
 }
 
 templ nav(lang, title string) {
-    <header class="flex items-center justify-between pt-8">
+    <header class="flex flex-col gap-5 pt-6 sm:flex-row sm:items-center sm:justify-between sm:pt-8">
         <a href={templ.SafeURL("/" + lang)} class="text-sm font-semibold tracking-tight text-ink hover:text-gold transition-colors duration-200">
             Mathis Verstrepen
         </a>
 
-        <nav class="flex items-center gap-7">
+        <nav class="flex w-full flex-wrap items-center gap-x-5 gap-y-3 sm:w-auto sm:gap-7">
             @navItem(lang, "tech-academics", text[lang]["nav.tech"], title == "Tech & Academics")
             @navItem(lang, "experience", text[lang]["nav.experience"], title == "Experience")
             @navItem(lang, "projects", text[lang]["nav.projects"], title == "Projects")
             <a href="/assets/other/curriculum.pdf" download="Mathis-Verstrepen-CV.pdf" class="text-sm transition-colors duration-200 text-smoke hover:text-ink">{ text[lang]["nav.cv"] }</a>
             <a href="/contact" target="_blank" class="text-sm transition-colors duration-200 text-smoke hover:text-ink">{ text[lang]["nav.contact"] }</a>
-            <span class="h-3 w-px bg-line/15"></span>
+            <span class="hidden h-3 w-px bg-line/15 sm:block"></span>
             <div class="flex items-center gap-2">
                 <button onclick="window.location.href = urlResolver('en')" type="button"
                     class={ "text-[0.8125rem] font-medium transition-colors duration-200", templ.KV("text-ink", lang == "en"), templ.KV("text-smoke hover:text-ink", lang != "en") }>EN</button>
@@ -258,7 +258,7 @@ templ navItem(lang, section, label string, active bool) {
 templ footer() {
     <footer class="mt-12 sm:mt-16 border-t border-line/10 pt-6 pb-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
         <p class="text-sm text-smoke">© 2026 Mathis Verstrepen</p>
-        <div class="flex items-center gap-6">
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
             <a href="mailto:contact@diikstra.fr" class="text-sm text-smoke hover:text-ink transition-colors duration-200">Email</a>
             <a href="https://www.linkedin.com/in/mathis-verstrepen/" target="_blank" class="text-sm text-smoke hover:text-ink transition-colors duration-200">LinkedIn</a>
             <a href="https://github.com/MathisVerstrepen" target="_blank" class="text-sm text-smoke hover:text-ink transition-colors duration-200">GitHub</a>
