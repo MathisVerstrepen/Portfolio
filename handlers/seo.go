@@ -27,8 +27,8 @@ func ServeSitemap(c echo.Context) error {
 	paths := []string{
 		"/en",
 		"/fr",
-		"/en/tech&academics",
-		"/fr/tech&academics",
+		"/en/tech-academics",
+		"/fr/tech-academics",
 		"/en/experience",
 		"/fr/experience",
 		"/en/projects",

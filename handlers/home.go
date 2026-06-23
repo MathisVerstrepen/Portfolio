@@ -11,7 +11,7 @@ import (
 func ServeHomePage(c echo.Context) error {
 	lang := c.Param("lang")
 
-	if lang == "" {
+	if !validLang(lang) {
 		return c.Redirect(http.StatusMovedPermanently, "/en")
 	}
 

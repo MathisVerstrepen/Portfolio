@@ -28,10 +28,13 @@ func main() {
 	e.GET("/:lang", handlers.ServeHomePage)
 
 	// ---- Content Routes ---- //
-	e.GET("/:lang/tech&academics", handlers.ServeTechAndAcademicsPage)
+	e.GET("/:lang/tech-academics", handlers.ServeTechAndAcademicsPage)
 	e.GET("/:lang/experience", handlers.ServeExperiencePage)
 	e.GET("/:lang/projects", handlers.ServeProjectsPage)
 	e.GET("/contact", handlers.ServeContactPage)
+
+	// ---- Legacy Redirects ---- //
+	e.GET("/:lang/tech&academics", handlers.RedirectLegacyTechAcademics)
 
 	// ---- Global Routes ---- //
 	e.GET("/robots.txt", handlers.ServeRobots)

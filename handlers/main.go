@@ -29,3 +29,7 @@ func Render(ctx echo.Context, statusCode int, t templ.Component) error {
 
 	return ctx.HTML(statusCode, buf.String())
 }
+
+func validLang(lang string) bool {
+	return lang == "en" || lang == "fr"
+}
