@@ -1,7 +1,6 @@
 package components
 
 import (
-    "encoding/json"
     "os"
     "strings"
 )
@@ -86,7 +85,14 @@ func alternateLocale(lang string) string {
     return "fr_FR"
 }
 
-func personJSONLD() string {
+func robotsDirective(title string) string {
+    if title == "Contact" {
+        return "noindex, nofollow"
+    }
+    return "index, follow"
+}
+
+func personJSONLD(includeContact bool) map[string]any {
     data := map[string]any{
         "@context": "https://schema.org",
         "@type": "Person",
@@ -94,8 +100,6 @@ func personJSONLD() string {
         "url": siteURL(),
         "image": siteURL() + "/assets/img/mathis.png",
         "jobTitle": "AI Software Engineer and Full-stack Developer",
-        "email": "contact@diikstra.fr",
-        "telephone": "+1-581-989-9088",
         "sameAs": []string{
             "https://www.linkedin.com/in/mathis-verstrepen/",
             "https://github.com/MathisVerstrepen",
@@ -106,11 +110,11 @@ func personJSONLD() string {
             {"@type": "CollegeOrUniversity", "name": "Polytech Lille"},
         },
     }
-    result, err := json.Marshal(data)
-    if err != nil {
-        return "{}"
+    if includeContact {
+        data["email"] = "contact@diikstra.fr"
+        data["telephone"] = "+1-581-989-9088"
     }
-    return string(result)
+    return data
 }
 
 templ layout(contents templ.Component, title string, lang string) {
@@ -122,7 +126,7 @@ templ layout(contents templ.Component, title string, lang string) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         <meta name="description" content={seoDescription(lang, title)}></meta>
         <meta name="author" content="Mathis Verstrepen"></meta>
-        <meta name="robots" content="index, follow"></meta>
+        <meta name="robots" content={robotsDirective(title)}></meta>
         <link rel="canonical" href={templ.SafeURL(pageURL(title, lang))}>
         if title != "Contact" {
             <link rel="alternate" hreflang="en" href={templ.SafeURL(pageURL(title, "en"))}>
@@ -169,11 +173,7 @@ templ layout(contents templ.Component, title string, lang string) {
 
         <link rel="stylesheet" href="/assets/css/output.css"></link>
         <title>{seoTitle(lang, title)}</title>
-        <script type="application/ld+json">
-            @templ.Raw(personJSONLD())
-        </script>
-
-        <script src="/assets/js/htmx.min.js"></script>
+        @templ.JSONScript("person-json-ld", personJSONLD(title == "Contact")).WithType("application/ld+json")
 
         if (getEnv("ENV") != "prod") {
             @templ.JSONScript("port", getEnv("PORT"))

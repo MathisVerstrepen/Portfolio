@@ -137,5 +137,34 @@ templ standardLink(link string) {
 }
 
 templ projectImage(image string) {
-    <img src={image} alt="project image" class="max-w-[min(100%,760px)] max-h-[380px] rounded-md border border-line/10" loading="lazy">
+    <img src={image} alt="project image" width={projectImageWidth(image)} height={projectImageHeight(image)} class="max-w-[min(100%,760px)] max-h-[380px] rounded-md border border-line/10" loading="lazy">
+}
+
+func projectImageWidth(image string) string {
+    if dimensions, ok := projectImageDimensions[image]; ok {
+        return dimensions[0]
+    }
+    return "760"
+}
+
+func projectImageHeight(image string) string {
+    if dimensions, ok := projectImageDimensions[image]; ok {
+        return dimensions[1]
+    }
+    return "380"
+}
+
+var projectImageDimensions = map[string][2]string{
+    "/assets/img/meridian_1.png": {"2335", "1337"},
+    "/assets/img/meridian_2.png": {"2336", "1335"},
+    "/assets/img/gouv_viz_01.png": {"1714", "994"},
+    "/assets/img/gouv_viz_02.png": {"1714", "994"},
+    "/assets/img/gouv_viz_03.png": {"1714", "994"},
+    "/assets/img/gouv_viz_04.png": {"1714", "994"},
+    "/assets/img/gouv_viz_05.png": {"1714", "994"},
+    "/assets/img/letterboxd_stats_2.png": {"2536", "1264"},
+    "/assets/img/letterboxd_stats_1.png": {"2532", "1265"},
+    "/assets/img/ugc_alerts_1.png": {"363", "491"},
+    "/assets/img/meledio_1.png": {"1127", "500"},
+    "/assets/img/gameinbox_1.png": {"3840", "2160"},
 }
