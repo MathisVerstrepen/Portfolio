@@ -14,11 +14,12 @@ templ Contact() {
 			/>
 			<div>
 				<h1 class="text-lg font-semibold text-ink">Mathis Verstrepen</h1>
-				<p class="text-sm text-smoke">Web developer <span class="text-gold">&amp;</span> data scientist</p>
+				<p class="text-sm text-smoke">AI software engineer <span class="text-gold">&amp;</span> full-stack developer</p>
 			</div>
 		</div>
 
 		<div class="mt-8 border-t border-line/10">
+			@contactRow("tel:+15819899088", "phone", "Phone", "+1 (581) 989-9088")
 			@contactRow("mailto:contact@diikstra.fr", "mail", "Email", "contact@diikstra.fr")
 			@contactRow("https://portfolio.diikstra.fr", "world-www", "Portfolio", "portfolio.diikstra.fr")
 			@contactRow("https://www.linkedin.com/in/mathis-verstrepen/", "brand-linkedin", "LinkedIn", "in/mathis-verstrepen")
@@ -61,7 +62,7 @@ templ socialLink(href, label string) {
 }
 
 func linkTarget(href string) string {
-	if strings.HasPrefix(href, "mailto:") {
+	if strings.HasPrefix(href, "mailto:") || strings.HasPrefix(href, "tel:") {
 		return "_self"
 	}
 	return "_blank"
