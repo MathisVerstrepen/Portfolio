@@ -13,32 +13,38 @@
 1. Clone this repository
 
 2. Copy the `.env.example` file to `.env`:
-   ```
+
+   ```bash
    cp .env.example .env
    ```
 
 3. Install Go dependencies:
-   ```
+
+   ```bash
    go mod tidy
    ```
 
 4. Install Air for live reload:
-   ```
+
+   ```bash
    go install github.com/air-verse/air@latest
    ```
 
 5. Install templ CLI tool:
-   ```
+
+   ```bash
    go install github.com/a-h/templ/cmd/templ@latest
    ```
 
 6. Install Tailwind CSS dependencies:
-   ```
+
+   ```bash
    npm install
    ```
 
 7. Run the development server:
-   ```
+
+   ```bash
    make dev
    ```
 
@@ -49,7 +55,7 @@
 | `make dev`      | Start dev server with live reload (Air)       |
 | `make css`      | Build Tailwind CSS                            |
 | `make generate` | Build CSS + generate templ components         |
-| `make build`    | Generate + compile binary to `./bin/portfolio` |
+| `make build`    | Generate + compile binary to `./bin/portfolio`|
 | `make run`      | Generate + run the server                     |
 | `make tidy`     | Run `go mod tidy`                             |
 | `make test`     | Run tests                                     |
@@ -57,7 +63,7 @@
 
 ## Project Structure
 
-```
+```text
 .
 ├── assets/
 │   ├── css/
@@ -84,7 +90,8 @@
 ## Building for Production
 
 Build and run:
-```
+
+```bash
 make build
 ./bin/portfolio
 ```
@@ -92,7 +99,8 @@ make build
 ## Docker
 
 Build and run with Docker:
-```
+
+```bash
 docker compose build
 docker compose up
 ```
