@@ -1,49 +1,39 @@
-# Build stage
 FROM golang:1.25-alpine AS builder
 
-# Install build dependencies
-RUN apk add --no-cache git make nodejs npm
+RUN apk add --no-cache git nodejs npm
 
-# Install templ
 RUN go install github.com/a-h/templ/cmd/templ@v0.3.1020
 
-# Set the working directory
 WORKDIR /app
 
-# Copy go mod and sum files
-COPY go.mod ./
-COPY . .
-
-# Install tailwindcss
-RUN npm install -D tailwindcss
-
-# Generate CSS
-RUN npx tailwindcss -i ./assets/css/input.css -o ./assets/css/output.css --minify
-
-RUN templ generate
-
-RUN go mod tidy
+COPY go.mod go.sum ./
 RUN go mod download
 
-# Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main main.go
+COPY package.json package-lock.json ./
+RUN npm ci
 
-# Final stage
+COPY . .
+
+RUN npx tailwindcss -i ./assets/css/input.css -o ./assets/css/output.css --minify
+RUN templ generate -path ./components
+
+RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /portfolio .
+
 FROM alpine:latest
 
 RUN apk --no-cache add ca-certificates
+RUN addgroup -S portfolio && adduser -S portfolio -G portfolio
 
-WORKDIR /root
-ENV ROOT_DIR=/root
+WORKDIR /app
+ENV ENV=prod \
+    PORT=8080 \
+    ROOT_DIR=/app
 
-# Copy the pre-built binary file from the previous stage
-COPY --from=builder /app/main .
+COPY --from=builder --chown=portfolio:portfolio /portfolio ./portfolio
+COPY --from=builder --chown=portfolio:portfolio /app/assets ./assets
 
-# Copy static assets
-COPY --from=builder /app/assets ./assets
+USER portfolio
 
-# Expose port 8080 to the outside world
 EXPOSE 8080
 
-# Command to run the executable
-CMD ["./main"]
+CMD ["./portfolio"]

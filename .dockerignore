@@ -1,0 +1,14 @@
+.git
+.github
+.air.toml
+.env
+bin
+tmp
+node_modules
+coverage
+*.log
+*.prof
+*.trace
+*.test
+*_templ.go
+assets/css/output.css
