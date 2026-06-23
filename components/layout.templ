@@ -1,18 +1,153 @@
 package components
 
-import "os"
+import (
+    "os"
+    "strings"
+)
 
 func getEnv(key string) string {
     return os.Getenv(key)
 }
 
-templ layout(contents templ.Component, title string) {
+func siteURL() string {
+    url := strings.TrimRight(os.Getenv("SITE_URL"), "/")
+    if url == "" {
+        return "https://portfolio.diikstra.fr"
+    }
+    return url
+}
+
+func pageKey(title string) string {
+    switch title {
+    case "Tech & Academics":
+        return "tech"
+    case "Experience":
+        return "experience"
+    case "Projects":
+        return "projects"
+    case "Contact":
+        return "contact"
+    default:
+        return "home"
+    }
+}
+
+func localizedText(lang, key, fallback string) string {
+    if values, ok := text[lang]; ok {
+        if value := values[key]; value != "" {
+            return value
+        }
+    }
+    if value := text["en"][key]; value != "" {
+        return value
+    }
+    return fallback
+}
+
+func seoTitle(lang, title string) string {
+    return localizedText(lang, "seo."+pageKey(title)+".title", title+" - Mathis Verstrepen")
+}
+
+func seoDescription(lang, title string) string {
+    return localizedText(lang, "seo."+pageKey(title)+".description", "Portfolio of Mathis Verstrepen, AI software engineer and full-stack developer.")
+}
+
+func pagePath(title, lang string) string {
+    switch title {
+    case "Tech & Academics":
+        return "/" + lang + "/tech-academics"
+    case "Experience":
+        return "/" + lang + "/experience"
+    case "Projects":
+        return "/" + lang + "/projects"
+    case "Contact":
+        return "/contact"
+    default:
+        return "/" + lang
+    }
+}
+
+func pageURL(title, lang string) string {
+    return siteURL() + pagePath(title, lang)
+}
+
+func ogLocale(lang string) string {
+    if lang == "fr" {
+        return "fr_FR"
+    }
+    return "en_US"
+}
+
+func alternateLocale(lang string) string {
+    if lang == "fr" {
+        return "en_US"
+    }
+    return "fr_FR"
+}
+
+func robotsDirective(title string) string {
+    if title == "Contact" {
+        return "noindex, nofollow"
+    }
+    return "index, follow"
+}
+
+func personJSONLD(includeContact bool) map[string]any {
+    data := map[string]any{
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mathis Verstrepen",
+        "url": siteURL(),
+        "image": siteURL() + "/assets/img/mathis.png",
+        "jobTitle": "AI Software Engineer and Full-stack Developer",
+        "sameAs": []string{
+            "https://www.linkedin.com/in/mathis-verstrepen/",
+            "https://github.com/MathisVerstrepen",
+            "https://portfolio.diikstra.fr",
+        },
+        "alumniOf": []map[string]string{
+            {"@type": "CollegeOrUniversity", "name": "Université Laval"},
+            {"@type": "CollegeOrUniversity", "name": "Polytech Lille"},
+        },
+    }
+    if includeContact {
+        data["email"] = "contact@diikstra.fr"
+        data["telephone"] = "+33 6 09 10 52 99"
+    }
+    return data
+}
+
+templ layout(contents templ.Component, title string, lang string) {
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang={lang}>
 
     <head>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content={seoDescription(lang, title)}></meta>
+        <meta name="author" content="Mathis Verstrepen"></meta>
+        <meta name="robots" content={robotsDirective(title)}></meta>
+        <link rel="canonical" href={templ.SafeURL(pageURL(title, lang))}>
+        if title != "Contact" {
+            <link rel="alternate" hreflang="en" href={templ.SafeURL(pageURL(title, "en"))}>
+            <link rel="alternate" hreflang="fr" href={templ.SafeURL(pageURL(title, "fr"))}>
+            <link rel="alternate" hreflang="x-default" href={templ.SafeURL(pageURL(title, "en"))}>
+        }
+
+        <meta property="og:type" content="website"></meta>
+        <meta property="og:site_name" content="Mathis Verstrepen"></meta>
+        <meta property="og:title" content={seoTitle(lang, title)}></meta>
+        <meta property="og:description" content={seoDescription(lang, title)}></meta>
+        <meta property="og:url" content={pageURL(title, lang)}></meta>
+        <meta property="og:image" content={siteURL() + "/assets/img/mathis.png"}></meta>
+        <meta property="og:locale" content={ogLocale(lang)}></meta>
+        if title != "Contact" {
+            <meta property="og:locale:alternate" content={alternateLocale(lang)}></meta>
+        }
+        <meta name="twitter:card" content="summary_large_image"></meta>
+        <meta name="twitter:title" content={seoTitle(lang, title)}></meta>
+        <meta name="twitter:description" content={seoDescription(lang, title)}></meta>
+        <meta name="twitter:image" content={siteURL() + "/assets/img/mathis.png"}></meta>
 
         <link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon/apple-icon-60x60.png">
@@ -28,14 +163,17 @@ templ layout(contents templ.Component, title string) {
         <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon/favicon-96x96.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
         <link rel="manifest" href="/assets/favicon/manifest.json">
-        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileColor" content="#0A0C10">
         <meta name="msapplication-TileImage" content="/assets/favicon/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff">
+        <meta name="theme-color" content="#0A0C10">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="/assets/css/output.css"></link>
-        <title>{title}</title>
-
-        <script src="/assets/js/htmx.min.js"></script>
+        <title>{seoTitle(lang, title)}</title>
+        @templ.JSONScript("person-json-ld", personJSONLD(title == "Contact")).WithType("application/ld+json")
 
         if (getEnv("ENV") != "prod") {
             @templ.JSONScript("port", getEnv("PORT"))
@@ -62,17 +200,19 @@ templ layout(contents templ.Component, title string) {
         @urlResolver()
     </head>
 
-    <body class="bg-beige relative font-serif px-8">
-        <div class="relative z-10 sm:max-w-[1366px] mx-auto py-16 sm:mt-8">
-            if (title != "Contact") {
-                @languageSwitcher()
+    <body class="canvas grain text-ink font-sans antialiased min-h-screen">
+        if (title == "Contact") {
+            <div class="min-h-screen flex items-center justify-center px-6 py-16">
                 @contents
-                @footer()                
-            } else {
-                @contents
-            }
-        </div>
-        if (title != "Contact") {
+            </div>
+        } else {
+            <div class="mx-auto w-full max-w-[1080px] px-5 sm:px-10 lg:px-14 min-h-dvh flex flex-col">
+                @nav(lang, title)
+                <main class={ "flex-1 flex flex-col", templ.KV("justify-center", title == "Home"), templ.KV("pt-10 sm:pt-20", title != "Home") }>
+                    @contents
+                </main>
+                @footer()
+            </div>
             @Svg()
         }
     </body>
@@ -80,26 +220,51 @@ templ layout(contents templ.Component, title string) {
     </html>
 }
 
-templ Root(contents templ.Component, title string) {
-    @layout(contents, title)
+templ Root(contents templ.Component, title string, lang string) {
+    @layout(contents, title, lang)
+}
+
+templ nav(lang, title string) {
+    <header class="flex flex-col gap-5 pt-6 sm:flex-row sm:items-center sm:justify-between sm:pt-8">
+        <a href={templ.SafeURL("/" + lang)} class="text-sm font-semibold tracking-tight text-ink hover:text-gold transition-colors duration-200">
+            Mathis Verstrepen
+        </a>
+
+        <nav class="flex w-full flex-wrap items-center gap-x-5 gap-y-3 sm:w-auto sm:gap-7">
+            @navItem(lang, "tech-academics", text[lang]["nav.tech"], title == "Tech & Academics")
+            @navItem(lang, "experience", text[lang]["nav.experience"], title == "Experience")
+            @navItem(lang, "projects", text[lang]["nav.projects"], title == "Projects")
+            <a href="/assets/other/curriculum.pdf" download="Mathis-Verstrepen-CV.pdf" class="text-sm transition-colors duration-200 text-smoke hover:text-ink">{ text[lang]["nav.cv"] }</a>
+            <a href="/contact" target="_blank" class="text-sm transition-colors duration-200 text-smoke hover:text-ink">{ text[lang]["nav.contact"] }</a>
+            <span class="hidden h-3 w-px bg-line/15 sm:block"></span>
+            <div class="flex items-center gap-2">
+                <button onclick="window.location.href = urlResolver('en')" type="button"
+                    class={ "text-[0.8125rem] font-medium transition-colors duration-200", templ.KV("text-ink", lang == "en"), templ.KV("text-smoke hover:text-ink", lang != "en") }>EN</button>
+                <span class="text-smoke/40 text-xs">/</span>
+                <button onclick="window.location.href = urlResolver('fr')" type="button"
+                    class={ "text-[0.8125rem] font-medium transition-colors duration-200", templ.KV("text-ink", lang == "fr"), templ.KV("text-smoke hover:text-ink", lang != "fr") }>FR</button>
+            </div>
+        </nav>
+    </header>
+}
+
+templ navItem(lang, section, label string, active bool) {
+    <a href={templ.SafeURL("/" + lang + "/" + section)}
+       class={ "text-sm transition-colors duration-200", templ.KV("text-ink", active), templ.KV("text-smoke hover:text-ink", !active) }>
+        {label}
+    </a>
 }
 
 templ footer() {
-    <footer class="flex flex-col justify-center items-center mt-20">
-        <div class="flex space-x-4 w-full justify-center items-center mb-10">
-            <hr width="30%" class="border-1 border-grey"></hr>
-            <a href="mailto:contact@diikstra.fr" target="_blank">@UseIcon("mail", "rgb(60 61 55)", "large")</a>
-            <a href="https://www.linkedin.com/in/mathis-verstrepen/" target="_blank">@UseIcon("brand-linkedin", "rgb(60 61 55)", "large")</a>
-            <a href="https://github.com/MathisVerstrepen" target="_blank">@UseIcon("brand-github", "rgb(60 61 55)", "large")</a>
-            <hr width="30%" class="border-1 border-grey"></hr>
-        </div>
-        <p class="text-sm text-grey">Copyright © 2025 Mathis Verstrepen</p>
-        <div class="flex space-x-4 mt-5 items-center">
-            <a href="https://portfolio.diikstra.fr/contact" target="_blank" class="underline font-bold font-sans text-grey hover:text-black duration-200">Contact</a>
+    <footer class="mt-12 sm:mt-16 border-t border-line/10 pt-6 pb-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+        <p class="text-sm text-smoke">© 2026 Mathis Verstrepen</p>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <a href="mailto:contact@diikstra.fr" class="text-sm text-smoke hover:text-ink transition-colors duration-200">Email</a>
+            <a href="https://www.linkedin.com/in/mathis-verstrepen/" target="_blank" class="text-sm text-smoke hover:text-ink transition-colors duration-200">LinkedIn</a>
+            <a href="https://github.com/MathisVerstrepen" target="_blank" class="text-sm text-smoke hover:text-ink transition-colors duration-200">GitHub</a>
         </div>
     </footer>
 }
-
 
 templ urlResolver() {
     <script>
@@ -112,18 +277,4 @@ templ urlResolver() {
             return url.replace("/fr", "/en");
         }
     </script>
-}
-
-templ languageSwitcher() {
-    <div class="absolute top-16 right-0 flex">
-        <div onclick="window.location.href = urlResolver('en')" role="button"
-            class="text-grey hover:text-black duration-200 mr-1">
-            EN
-        </div>
-        | 
-        <div onclick="window.location.href = urlResolver('fr')" role="button"
-            class="text-grey hover:text-black duration-200 ml-1">
-            FR
-        </div>
-    </div>
 }

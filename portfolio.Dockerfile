@@ -1,11 +1,11 @@
 # Build stage
-FROM golang:1.23-alpine AS builder
+FROM golang:1.25-alpine AS builder
 
 # Install build dependencies
 RUN apk add --no-cache git make nodejs npm
 
 # Install templ
-RUN go install github.com/a-h/templ/cmd/templ@v0.3.819
+RUN go install github.com/a-h/templ/cmd/templ@v0.3.1020
 
 # Set the working directory
 WORKDIR /app
