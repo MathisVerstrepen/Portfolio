@@ -97,11 +97,11 @@ templ nav(lang, title string) {
         </a>
 
         <nav class="flex items-center gap-7">
-            @navItem(lang, "tech&academics", "Tech", title == "Tech & Academics")
-            @navItem(lang, "experience", "Experience", title == "Experience")
-            @navItem(lang, "projects", "Projects", title == "Projects")
-            <a href="/assets/other/curriculum.pdf" download="Mathis-Verstrepen-CV.pdf" class="text-sm transition-colors duration-200 text-smoke hover:text-ink">CV</a>
-            <a href="/contact" target="_blank" class="text-sm transition-colors duration-200 text-smoke hover:text-ink">Contact</a>
+            @navItem(lang, "tech&academics", text[lang]["nav.tech"], title == "Tech & Academics")
+            @navItem(lang, "experience", text[lang]["nav.experience"], title == "Experience")
+            @navItem(lang, "projects", text[lang]["nav.projects"], title == "Projects")
+            <a href="/assets/other/curriculum.pdf" download="Mathis-Verstrepen-CV.pdf" class="text-sm transition-colors duration-200 text-smoke hover:text-ink">{ text[lang]["nav.cv"] }</a>
+            <a href="/contact" target="_blank" class="text-sm transition-colors duration-200 text-smoke hover:text-ink">{ text[lang]["nav.contact"] }</a>
             <span class="h-3 w-px bg-line/15"></span>
             <div class="flex items-center gap-2">
                 <button onclick="window.location.href = urlResolver('en')" type="button"
