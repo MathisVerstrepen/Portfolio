@@ -1,9 +1,116 @@
 package components
 
-import "os"
+import (
+    "encoding/json"
+    "os"
+    "strings"
+)
 
 func getEnv(key string) string {
     return os.Getenv(key)
+}
+
+func siteURL() string {
+    url := strings.TrimRight(os.Getenv("SITE_URL"), "/")
+    if url == "" {
+        return "https://portfolio.diikstra.fr"
+    }
+    return url
+}
+
+func pageKey(title string) string {
+    switch title {
+    case "Tech & Academics":
+        return "tech"
+    case "Experience":
+        return "experience"
+    case "Projects":
+        return "projects"
+    case "Contact":
+        return "contact"
+    default:
+        return "home"
+    }
+}
+
+func localizedText(lang, key, fallback string) string {
+    if values, ok := text[lang]; ok {
+        if value := values[key]; value != "" {
+            return value
+        }
+    }
+    if value := text["en"][key]; value != "" {
+        return value
+    }
+    return fallback
+}
+
+func seoTitle(lang, title string) string {
+    return localizedText(lang, "seo."+pageKey(title)+".title", title+" — Mathis Verstrepen")
+}
+
+func seoDescription(lang, title string) string {
+    return localizedText(lang, "seo."+pageKey(title)+".description", "Portfolio of Mathis Verstrepen, AI software engineer and full-stack developer.")
+}
+
+func pagePath(title, lang string) string {
+    switch title {
+    case "Tech & Academics":
+        return "/" + lang + "/tech&academics"
+    case "Experience":
+        return "/" + lang + "/experience"
+    case "Projects":
+        return "/" + lang + "/projects"
+    case "Contact":
+        return "/contact"
+    default:
+        return "/" + lang
+    }
+}
+
+func pageURL(title, lang string) string {
+    return siteURL() + pagePath(title, lang)
+}
+
+func ogLocale(lang string) string {
+    if lang == "fr" {
+        return "fr_FR"
+    }
+    return "en_US"
+}
+
+func alternateLocale(lang string) string {
+    if lang == "fr" {
+        return "en_US"
+    }
+    return "fr_FR"
+}
+
+func personJSONLD() string {
+    data := map[string]any{
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mathis Verstrepen",
+        "url": siteURL(),
+        "image": siteURL() + "/assets/img/mathis.png",
+        "jobTitle": "AI Software Engineer and Full-stack Developer",
+        "email": "contact@diikstra.fr",
+        "telephone": "+1-581-989-9088",
+        "sameAs": []string{
+            "https://www.linkedin.com/in/mathis-verstrepen/",
+            "https://github.com/MathisVerstrepen",
+            "https://portfolio.diikstra.fr",
+        },
+        "alumniOf": []map[string]string{
+            {"@type": "CollegeOrUniversity", "name": "Université Laval"},
+            {"@type": "CollegeOrUniversity", "name": "Polytech Lille"},
+        },
+    }
+    result, err := json.Marshal(data)
+    if err != nil {
+        return "{}"
+    }
+    return string(result)
 }
 
 templ layout(contents templ.Component, title string, lang string) {
@@ -13,6 +120,30 @@ templ layout(contents templ.Component, title string, lang string) {
     <head>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content={seoDescription(lang, title)}></meta>
+        <meta name="author" content="Mathis Verstrepen"></meta>
+        <meta name="robots" content="index, follow"></meta>
+        <link rel="canonical" href={templ.SafeURL(pageURL(title, lang))}>
+        if title != "Contact" {
+            <link rel="alternate" hreflang="en" href={templ.SafeURL(pageURL(title, "en"))}>
+            <link rel="alternate" hreflang="fr" href={templ.SafeURL(pageURL(title, "fr"))}>
+            <link rel="alternate" hreflang="x-default" href={templ.SafeURL(pageURL(title, "en"))}>
+        }
+
+        <meta property="og:type" content="website"></meta>
+        <meta property="og:site_name" content="Mathis Verstrepen"></meta>
+        <meta property="og:title" content={seoTitle(lang, title)}></meta>
+        <meta property="og:description" content={seoDescription(lang, title)}></meta>
+        <meta property="og:url" content={pageURL(title, lang)}></meta>
+        <meta property="og:image" content={siteURL() + "/assets/img/mathis.png"}></meta>
+        <meta property="og:locale" content={ogLocale(lang)}></meta>
+        if title != "Contact" {
+            <meta property="og:locale:alternate" content={alternateLocale(lang)}></meta>
+        }
+        <meta name="twitter:card" content="summary_large_image"></meta>
+        <meta name="twitter:title" content={seoTitle(lang, title)}></meta>
+        <meta name="twitter:description" content={seoDescription(lang, title)}></meta>
+        <meta name="twitter:image" content={siteURL() + "/assets/img/mathis.png"}></meta>
 
         <link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon/apple-icon-60x60.png">
@@ -37,7 +168,10 @@ templ layout(contents templ.Component, title string, lang string) {
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="/assets/css/output.css"></link>
-        <title>{title} — Mathis Verstrepen</title>
+        <title>{seoTitle(lang, title)}</title>
+        <script type="application/ld+json">
+            @templ.Raw(personJSONLD())
+        </script>
 
         <script src="/assets/js/htmx.min.js"></script>
 

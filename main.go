@@ -34,6 +34,8 @@ func main() {
 	e.GET("/contact", handlers.ServeContactPage)
 
 	// ---- Global Routes ---- //
+	e.GET("/robots.txt", handlers.ServeRobots)
+	e.GET("/sitemap.xml", handlers.ServeSitemap)
 	e.GET("/ping", handlers.ServePing)
 	if os.Getenv("ENV") != "prod" {
 		e.GET("/ws", handlers.InitHotReloadWebSocket)
