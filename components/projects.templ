@@ -137,7 +137,7 @@ templ standardLink(link string) {
 }
 
 templ projectImage(image string) {
-    <img src={image} alt="project image" width={projectImageWidth(image)} height={projectImageHeight(image)} class="max-w-[min(100%,760px)] max-h-[380px] rounded-md border border-line/10" loading="lazy">
+    <img src={image} alt="project image" width={projectImageWidth(image)} height={projectImageHeight(image)} class="w-auto h-auto max-w-[min(100%,760px)] max-h-[380px] object-contain rounded-md border border-line/10" loading="lazy">
 }
 
 func projectImageWidth(image string) string {
